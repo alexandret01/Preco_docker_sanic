@@ -1,14 +1,20 @@
 from sanic import Sanic
 from sanic.response import json
+from sanic_cors import CORS
 import yfinance as yf
 from flaml import AutoML
 import pandas as pd
 import numpy as np
 
+# Criando a instância do Sanic
 app = Sanic("PrecoSanicApp")
+
+# Habilitar CORS para todas as origens (cuidado com isso em produção!)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route("/previsao", methods=["POST"])
 async def previsao(request):
+
     data = request.json
     ticker = data.get('ticker', 'AAPL')
     periodo = data.get('period', '1y')
@@ -36,7 +42,14 @@ async def previsao(request):
     predicted_price = automl.predict(X[-1:])
 
     # Retornando o preço previsto
-    return json({"ticker": ticker, "predicted_price": predicted_price.tolist()})
+    return json({
+        "ticker": ticker, 
+        "predicted_price": predicted_price.tolist()
+    }, headers={
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type"
+    })
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)
