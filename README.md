@@ -39,11 +39,17 @@ Antes de começar, você precisa ter o **Python 3.7** ou superior instalado em s
     pip install -r requirements.txt
     ```
 
-4. **Execute a aplicação**  
+4. **Build a aplicação**  
+   Agora, você pode buildar a aplicação localmente usando o comando:
+
+    ```bash
+    sudo docker build -t preco-sanic-app .
+    ```
+5. **Execute a aplicação**  
    Agora, você pode rodar a aplicação localmente usando o comando:
 
     ```bash
-    sudo docker run -it -p 8000:8000 preco-sanic-app bash
+    sudo docker run -p 8000:8000 preco-sanic-app
     ```
 
 ### Como usar a API
