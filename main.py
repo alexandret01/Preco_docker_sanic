@@ -11,9 +11,11 @@ app = Sanic("PrecoSanicApp")
 async def previsao(request):
     data = request.json
     ticker = data.get('ticker', 'AAPL')
+    periodo = data.get('period', '1y')
+    intervalo = data.get('interval', '1d')
 
     # Obtendo dados financeiros com yfinance
-    stock_data = yf.download(ticker, period="1y", interval="1d")
+    stock_data = yf.download(ticker, period=periodo, interval=intervalo)
     df = pd.DataFrame(stock_data)
 
     # Seleção de features (X) e variável alvo (y)

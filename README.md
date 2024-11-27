@@ -54,7 +54,7 @@ Antes de começar, você precisa ter o **Python 3.7** ou superior instalado em s
 
 ### Como usar a API
 
-A aplicação oferece um endpoint `/previsao` para fazer previsões do preço de fechamento de uma ação com base no histórico dos últimos 365 dias.
+A aplicação oferece um endpoint `/previsao` para fazer previsões do preço de fechamento de uma ação com base no histórico dos últimos 365 dias, com um intervalo de 1 dia, por padrão.
 
 **Endpoint**
 
@@ -63,16 +63,29 @@ A aplicação oferece um endpoint `/previsao` para fazer previsões do preço de
 
 Envie uma requisição POST com um corpo JSON contendo o código da ação que deseja prever o preço. Por padrão, se você não fornecer o parâmetro `ticker`, o código da ação será **AAPL** (Apple Inc.).
 
-**Corpo da Requisição:**
+- **Periodo**: ‘1d’, ‘5d’, ‘1mo’, ‘3mo’, ‘6mo’, ‘1y’, ‘2y’, ‘5y’, ‘10y’, ‘ytd’, ‘max’.
+- **Intervalo**: ‘1m’, ‘2m’, ‘5m’, ‘15m’, ‘30m’, ‘60m’, ‘90m’, ‘1h’, ‘1d’, ‘5d’, ‘1wk’, ‘1mo’, ‘3mo’.
+
+Obs: Não são obrigatorios os campos period e interval, caso não tenha period e interval, por padrão será 1y e 1d.
+
+**Corpo da Requisição₁:**
 
     {
-        "ticker": "AAPL" 
+        "ticker": "AAPL",
+        "period": "1y",
+        "interval": "1d"
+    }
+
+**Corpo da Requisição₂:**
+
+    {
+        "ticker": "AAPL"
     }
 
 **Resposta:**
 
     {
       "ticker": "AAPL",
-      "predicted_price": [150.25]
+      "predicted_price": [234.98]
     }
 
